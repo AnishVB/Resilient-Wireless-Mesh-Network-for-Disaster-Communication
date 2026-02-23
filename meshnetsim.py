@@ -67,7 +67,7 @@ class MeshNetworkSimulator:
         
     def initialize_nodes(self):
         """Create nodes at random positions in the disaster area"""
-        print("[INIT] Initializing mesh nodes...")
+        print("Initializing nodes...")
         positions = self._generate_node_positions()
         
         for i in range(self.num_nodes):
@@ -78,7 +78,6 @@ class MeshNetworkSimulator:
                 z=positions[i][2]
             )
             self.nodes[i] = node
-            print(f"  Node {i}: Position ({node.x:.1f}, {node.y:.1f}, {node.z:.1f})")
     
     def _generate_node_positions(self) -> List[Tuple[float, float, float]]:
         """Generate random node positions (can be customized for specific topologies)"""
@@ -118,7 +117,7 @@ class MeshNetworkSimulator:
     
     def build_topology(self):
         """Build mesh topology based on node distances (AODV)"""
-        print("[TOPO] Building mesh topology...")
+        print("Building topology...")
         self.links.clear()
         
         for i in range(self.num_nodes):
@@ -311,18 +310,18 @@ class MeshNetworkSimulator:
     
     def run_simulation(self, steps: int = 100, enable_ml_prediction: bool = True):
         """Run complete simulation"""
-        print("\n[SIM] Initializing simulation...")
+        print("Initializing simulation...")
         self.initialize_nodes()
         self.build_topology()
         
         # Train LSTM model if ML enabled
         if enable_ml_prediction:
-            print("[ML] Training failure prediction model...")
+            print("Training failure prediction model...")
             self.failure_predictor.train(epochs=50)
             self.failure_predictor.save_model()
         
-        print(f"\n[SIM] Running simulation for {steps} timesteps...")
-        print(f"[SIM] Network has {self.num_nodes} nodes\n")
+        print(f"Running simulation for {steps} timesteps...")
+        print(f"Network has {self.num_nodes} nodes")
         
         for step in range(steps):
             metrics = self.simulate_step()
@@ -333,7 +332,7 @@ class MeshNetworkSimulator:
                       f"Delay={metrics['delay']:.1f}ms | "
                       f"Throughput={metrics['throughput']:.1f}Mbps")
         
-        print("\n[SUCCESS] Simulation complete!")
+        print("Simulation complete!")
         return self.history
 
 

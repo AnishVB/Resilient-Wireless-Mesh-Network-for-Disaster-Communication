@@ -1,0 +1,21 @@
+{
+  "timestamp": "2026-02-23T10:59:23.996586",
+  "configuration": {
+    "nodes": 5,
+    "steps": 100,
+    "seed": null
+  },
+  "simulation_metrics": {
+    "avg_pdr": 14.697172963651372,
+    "min_pdr": 0.0,
+    "avg_delay": 6.10544360739249,
+    "avg_throughput": 9.217435799530676,
+    "total_reroutes": 235,
+    "final_active_links": 0
+  },
+  "rerouting_analysis": {
+    "total_reroutes": 0,
+    "successful_reroutes": 0,
+    "critical_reroutes": 0
+  }
+}

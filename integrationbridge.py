@@ -140,16 +140,10 @@ class ProactiveReroutingEngine:
         link_key = alert['link']
         src, dst = link_key
         
-        print(f"\n[REROUTE] Alert Type: {alert['type']}")
-        print(f"          Link: {src} -> {dst}")
-        print(f"          Action: {alert['action']}")
-        
         # Find alternative path
         alt_path = self.simulator._find_backup_path(src, dst)
         
         if alt_path and len(alt_path) > 2:
-            print(f"          Alternative Path: {' -> '.join(map(str, alt_path))}")
-            
             event = {
                 'timestamp': self.simulator.time_step,
                 'original_link': link_key,
@@ -160,17 +154,13 @@ class ProactiveReroutingEngine:
             
             self.reroute_log.append(event)
             self.active_reroutes[link_key] = event
-            
-            print(f"          [SUCCESS] Reroute activated!\n")
             return True
         else:
-            print(f"          [FAILED] No alternative path available\n")
             return False
     
     def run_proactive_loop(self, simulator_steps: int = 100):
         """Main control loop for proactive rerouting"""
-        print("\n[BRIDGE] Proactive Rerouting Engine Started")
-        print("[BRIDGE] Monitoring for link failures...\n")
+        print("Monitoring network...")
         
         for step in range(simulator_steps):
             # Run simulation step
@@ -184,8 +174,6 @@ class ProactiveReroutingEngine:
             proactive_count = len([a for a in alerts if a['action'] in ['PROACTIVE_REROUTE', 'PREVENTIVE_REROUTE']])
             
             if critical_count > 0 or proactive_count > 0:
-                print(f"[BRIDGE] Step {step}: {critical_count} critical, {proactive_count} proactive alerts")
-                
                 # Execute reroutes in order of severity
                 for alert in sorted(alerts, key=lambda x: x['action'] == 'IMMEDIATE_REROUTE', reverse=True):
                     self.execute_proactive_reroute(alert)
@@ -218,26 +206,24 @@ class NetworkBridge:
         
     def deploy_and_run(self):
         """Deploy mesh network and run disaster scenario"""
-        print("="*70)
-        print(" DISASTER-RESILIENT WIRELESS MESH NETWORK SIMULATOR")
-        print("="*70)
+        print("Disaster-Resilient Wireless Mesh Network Simulator")
         
         # Initialize simulator
-        print("\n[DEPLOY] Step 1: Initialize Mesh Network")
+        print("Initializing network...")
         self.simulator.initialize_nodes()
         self.simulator.build_topology()
         
         # Train ML model
-        print("\n[DEPLOY] Step 2: Train LSTM Failure Predictor")
+        print("Training LSTM failure predictor...")
         self.simulator.failure_predictor.train(epochs=50)
         self.simulator.failure_predictor.save_model()
         
         # Run proactive rerouting loop
-        print("\n[DEPLOY] Step 3: Execute Network with AI-Driven Self-Healing")
+        print("Executing network with AI-driven self-healing...")
         self.rerouting_engine.run_proactive_loop(self.num_steps)
         
         # Generate reports
-        print("\n[DEPLOY] Step 4: Analyze Results")
+        print("Analyzing results...")
         return self.generate_report()
     
     def generate_report(self) -> Dict:

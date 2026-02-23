@@ -65,13 +65,13 @@ class NodeFailurePredictor:
     
     def train(self, epochs=50, validation_split=0.2):
         """Train the LSTM model on synthetic data"""
-        print("[INFO] Generating synthetic training data...")
+        print("Generating synthetic training data...")
         X_train, y_train = self.generate_synthetic_training_data(samples=1000, sequence_length=self.window_size)
         
-        print("[INFO] Building LSTM model...")
+        print("Building LSTM model...")
         self.build_model()
         
-        print("[INFO] Training model...")
+        print("Training model...")
         history = self.model.fit(
             X_train, y_train,
             epochs=epochs,
@@ -81,7 +81,7 @@ class NodeFailurePredictor:
         )
         
         self.trained = True
-        print("[SUCCESS] Model training complete!")
+        print("Model training complete!")
         return history
     
     def save_model(self):
@@ -89,17 +89,17 @@ class NodeFailurePredictor:
         os.makedirs(os.path.dirname(self.model_path), exist_ok=True)
         if self.model:
             self.model.save(self.model_path)
-            print(f"[SUCCESS] Model saved to {self.model_path}")
+            print(f"Model saved to {self.model_path}")
     
     def load_model(self):
         """Load pre-trained model from disk"""
         if os.path.exists(self.model_path):
             self.model = tf.keras.models.load_model(self.model_path)
             self.trained = True
-            print(f"[SUCCESS] Model loaded from {self.model_path}")
+            print(f"Model loaded from {self.model_path}")
             return True
         else:
-            print(f"[WARNING] Model not found at {self.model_path}")
+            print(f"Model not found at {self.model_path}")
             return False
     
     def predict_failure_probability(self, rssi_stream):
@@ -151,5 +151,5 @@ if __name__ == "__main__":
     prob = predictor.predict_failure_probability(test_rssi)
     action = predictor.check_link_health(test_rssi)
     
-    print(f"\n[TEST] Failure Probability: {prob:.2%}")
-    print(f"[TEST] Action: {action}")
+    print(f"Failure Probability: {prob:.2%}")
+    print(f"Action: {action}")

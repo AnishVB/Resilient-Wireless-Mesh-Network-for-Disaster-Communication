@@ -67,7 +67,7 @@ class NetworkPerformanceAnalyzer:
         
         plt.tight_layout()
         plt.savefig(f'{self.output_dir}/01_pdr_comparison.png', dpi=300, bbox_inches='tight')
-        print("✓ Saved: 01_pdr_comparison.png")
+        print("Saved: 01_pdr_comparison.png")
         plt.close()
     
     def plot_delay_throughput(self, history: Dict):
@@ -101,7 +101,7 @@ class NetworkPerformanceAnalyzer:
         
         plt.tight_layout()
         plt.savefig(f'{self.output_dir}/02_delay_throughput.png', dpi=300, bbox_inches='tight')
-        print("✓ Saved: 02_delay_throughput.png")
+        print("Saved: 02_delay_throughput.png")
         plt.close()
     
     def plot_link_quality_analysis(self, history: Dict):
@@ -137,7 +137,7 @@ class NetworkPerformanceAnalyzer:
         
         plt.tight_layout()
         plt.savefig(f'{self.output_dir}/03_link_quality_timeseries.png', dpi=300, bbox_inches='tight')
-        print("✓ Saved: 03_link_quality_timeseries.png")
+        print("Saved: 03_link_quality_timeseries.png")
         plt.close()
     
     def plot_convergence_comparison(self, history: Dict):
@@ -167,7 +167,7 @@ class NetworkPerformanceAnalyzer:
         
         plt.tight_layout()
         plt.savefig(f'{self.output_dir}/04_convergence_comparison.png', dpi=300, bbox_inches='tight')
-        print("✓ Saved: 04_convergence_comparison.png")
+        print("Saved: 04_convergence_comparison.png")
         plt.close()
     
     def plot_active_links(self, history: Dict):
@@ -198,7 +198,7 @@ class NetworkPerformanceAnalyzer:
         
         plt.tight_layout()
         plt.savefig(f'{self.output_dir}/05_active_links.png', dpi=300, bbox_inches='tight')
-        print("✓ Saved: 05_active_links.png")
+        print("Saved: 05_active_links.png")
         plt.close()
     
     def plot_self_healing_effectiveness(self, rerouting_report: Dict):
@@ -240,7 +240,7 @@ class NetworkPerformanceAnalyzer:
         
         plt.tight_layout()
         plt.savefig(f'{self.output_dir}/06_self_healing_effectiveness.png', dpi=300, bbox_inches='tight')
-        print("✓ Saved: 06_self_healing_effectiveness.png")
+        print("Saved: 06_self_healing_effectiveness.png")
         plt.close()
     
     def plot_reroute_timeline(self, reroute_events: List[Dict]):
@@ -248,7 +248,7 @@ class NetworkPerformanceAnalyzer:
         Visualize rerouting events over time with their severity
         """
         if not reroute_events:
-            print("⚠ No reroute events to plot")
+            print("No reroute events to plot")
             return
         
         fig, ax = plt.subplots(figsize=(14, 6))
@@ -285,16 +285,14 @@ class NetworkPerformanceAnalyzer:
         
         plt.tight_layout()
         plt.savefig(f'{self.output_dir}/07_reroute_timeline.png', dpi=300, bbox_inches='tight')
-        print("✓ Saved: 07_reroute_timeline.png")
+        print("Saved: 07_reroute_timeline.png")
         plt.close()
     
     def generate_comprehensive_report(self, bridge_report: Dict):
         """
         Generate all visualizations from bridge simulation report
         """
-        print("\n" + "="*70)
-        print(" GENERATING PERFORMANCE ANALYSIS PLOTS")
-        print("="*70 + "\n")
+        print("Generating performance analysis plots...")
         
         history = bridge_report['history']
         rerouting_report = bridge_report['rerouting_analysis']
@@ -309,9 +307,7 @@ class NetworkPerformanceAnalyzer:
         if rerouting_report['reroute_events']:
             self.plot_reroute_timeline(rerouting_report['reroute_events'])
         
-        print("\n" + "="*70)
-        print(f"✓ All plots saved to: {self.output_dir}/")
-        print("="*70)
+        print(f"All plots saved to: {self.output_dir}/")
 
 
 def generate_performance_graphs():
@@ -332,9 +328,7 @@ def generate_performance_graphs():
 if __name__ == "__main__":
     report = generate_performance_graphs()
     
-    print("\n" + "="*70)
-    print(" SIMULATION RESULTS SUMMARY")
-    print("="*70)
+    print("Simulation Results Summary")
     metrics = report['simulation_metrics']
     print(f"Average PDR:           {metrics['avg_pdr']:.2f}%")
     print(f"Minimum PDR:           {metrics['min_pdr']:.2f}%")
@@ -342,4 +336,3 @@ if __name__ == "__main__":
     print(f"Average Throughput:    {metrics['avg_throughput']:.2f} Mbps")
     print(f"Total Reroutes:        {metrics['total_reroutes']}")
     print(f"Final Active Links:    {metrics['final_active_links']}")
-    print("="*70)
